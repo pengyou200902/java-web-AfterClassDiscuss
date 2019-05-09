@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>Show Detail</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" type="text/css">
+
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/board.css}" rel="stylesheet" type="text/css">
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div th:replace="TopNavBar :: topbar"></div><!--<br><br><br><br>-->
+    <div th:if="${infoMap.acctype} eq 'student'" ><div th:replace="LeftSideBar :: stuleftbar"></div></div>
+    <div th:if="${infoMap.acctype} eq 'teacher'" ><div th:replace="LeftSideBar :: tealeftbar"></div></div>
+    <div th:if="${infoMap.acctype} eq 'admin'" ><div th:replace="LeftSideBar :: adminleftbar"></div></div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                <div class="list-group-item" th:each="answer:${answers}">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title" th:text="'回答#'+${answer.ansOrder}"></h4>
+                        </div>
+                        <h6 class="card-title" th:text="'Answer ID: '+${answer.ansNo}"></h6>
+                        <h6 class="card-title" th:text="'Time: '+${answer.ansTime}"></h6>
+                        <h6 class="card-title" th:text="'TeacherNo: '+${answer.teaNo}"></h6>
+                        <h6 class="card-title" th:text="'LessonNo: '+${answer.lsnNo}"></h6>
+                        <div class="panel-body text-dark" th:text="${answer.ansContent}"></div><br>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" th:src="@{/js/jquery-3.3.1.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.bundle.js}"></script>
+<script type="text/javascript" th:src="@{/js/feather.min.js}"></script>
+</html>

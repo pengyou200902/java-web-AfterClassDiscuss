@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.friend.py.dao.TeacherMapper" >
+  <resultMap id="BaseResultMap" type="com.friend.py.model.Teacher" >
+    <id column="teaNo" property="teano" jdbcType="VARCHAR" />
+    <result column="teaName" property="teaname" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="CHAR" />
+    <result column="deptNo" property="deptno" jdbcType="VARCHAR" />
+    <result column="teaLevel" property="tealevel" jdbcType="VARCHAR" />
+    <result column="teaDscpt" property="teadscpt" jdbcType="VARCHAR" />
+    <result column="salary" property="salary" jdbcType="DOUBLE" />
+    <result column="id" property="id" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    teaNo, teaName, gender, deptNo, teaLevel, teaDscpt, salary, id, phone
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.friend.py.model.TeacherExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from teacher
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from teacher
+    where teaNo = #{teano,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from teacher
+    where teaNo = #{teano,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.friend.py.model.TeacherExample" >
+    delete from teacher
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.friend.py.model.Teacher" >
+    insert into teacher (teaNo, teaName, gender, 
+      deptNo, teaLevel, teaDscpt, 
+      salary, id, phone)
+    values (#{teano,jdbcType=VARCHAR}, #{teaname,jdbcType=VARCHAR}, #{gender,jdbcType=CHAR}, 
+      #{deptno,jdbcType=VARCHAR}, #{tealevel,jdbcType=VARCHAR}, #{teadscpt,jdbcType=VARCHAR}, 
+      #{salary,jdbcType=DOUBLE}, #{id,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.friend.py.model.Teacher" >
+    insert into teacher
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="teano != null" >
+        teaNo,
+      </if>
+      <if test="teaname != null" >
+        teaName,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="deptno != null" >
+        deptNo,
+      </if>
+      <if test="tealevel != null" >
+        teaLevel,
+      </if>
+      <if test="teadscpt != null" >
+        teaDscpt,
+      </if>
+      <if test="salary != null" >
+        salary,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="teano != null" >
+        #{teano,jdbcType=VARCHAR},
+      </if>
+      <if test="teaname != null" >
+        #{teaname,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=CHAR},
+      </if>
+      <if test="deptno != null" >
+        #{deptno,jdbcType=VARCHAR},
+      </if>
+      <if test="tealevel != null" >
+        #{tealevel,jdbcType=VARCHAR},
+      </if>
+      <if test="teadscpt != null" >
+        #{teadscpt,jdbcType=VARCHAR},
+      </if>
+      <if test="salary != null" >
+        #{salary,jdbcType=DOUBLE},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.friend.py.model.TeacherExample" resultType="java.lang.Integer" >
+    select count(*) from teacher
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update teacher
+    <set >
+      <if test="record.teano != null" >
+        teaNo = #{record.teano,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teaname != null" >
+        teaName = #{record.teaname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null" >
+        gender = #{record.gender,jdbcType=CHAR},
+      </if>
+      <if test="record.deptno != null" >
+        deptNo = #{record.deptno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tealevel != null" >
+        teaLevel = #{record.tealevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teadscpt != null" >
+        teaDscpt = #{record.teadscpt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salary != null" >
+        salary = #{record.salary,jdbcType=DOUBLE},
+      </if>
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update teacher
+    set teaNo = #{record.teano,jdbcType=VARCHAR},
+      teaName = #{record.teaname,jdbcType=VARCHAR},
+      gender = #{record.gender,jdbcType=CHAR},
+      deptNo = #{record.deptno,jdbcType=VARCHAR},
+      teaLevel = #{record.tealevel,jdbcType=VARCHAR},
+      teaDscpt = #{record.teadscpt,jdbcType=VARCHAR},
+      salary = #{record.salary,jdbcType=DOUBLE},
+      id = #{record.id,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.friend.py.model.Teacher" >
+    update teacher
+    <set >
+      <if test="teaname != null" >
+        teaName = #{teaname,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=CHAR},
+      </if>
+      <if test="deptno != null" >
+        deptNo = #{deptno,jdbcType=VARCHAR},
+      </if>
+      <if test="tealevel != null" >
+        teaLevel = #{tealevel,jdbcType=VARCHAR},
+      </if>
+      <if test="teadscpt != null" >
+        teaDscpt = #{teadscpt,jdbcType=VARCHAR},
+      </if>
+      <if test="salary != null" >
+        salary = #{salary,jdbcType=DOUBLE},
+      </if>
+      <if test="id != null" >
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where teaNo = #{teano,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.friend.py.model.Teacher" >
+    update teacher
+    set teaName = #{teaname,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=CHAR},
+      deptNo = #{deptno,jdbcType=VARCHAR},
+      teaLevel = #{tealevel,jdbcType=VARCHAR},
+      teaDscpt = #{teadscpt,jdbcType=VARCHAR},
+      salary = #{salary,jdbcType=DOUBLE},
+      id = #{id,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR}
+    where teaNo = #{teano,jdbcType=VARCHAR}
+  </update>
+</mapper>

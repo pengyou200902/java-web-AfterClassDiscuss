@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" type="text/css">
+
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/board.css}" rel="stylesheet" type="text/css">
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div th:replace="TopNavBar :: topbar"></div>
+    <div th:replace="LeftSideBar :: adminleftbar"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4"><br>
+                <div th:replace="CardTemplates :: ShowAllQuestion"></div>
+                <div th:replace="CardTemplates :: ShowAllAnswer"></div>
+            </main>
+        </div>
+    </div>
+
+</body>
+<script type="text/javascript" th:src="@{/js/jquery-3.3.1.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.bundle.js}"></script>
+<script type="text/javascript" th:src="@{/js/feather.min.js}"></script>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Find Lesson</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script type="text/javascript" th:src="@{/js/jquery-3.3.1.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.bundle.js}"></script>
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/signin.css}" rel="stylesheet" type="text/css">
+    <style>
+        p{
+            margin-bottom:1px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<form class="form-signin">
+    <h1 class="text-center h3 mb-9 font-weight-normal">Find Lesson By Number</h1><br>
+    <div>
+        <label for="number" class="sr-only">Lesson Number</label>
+        <p>Lesson Number</p>
+        <input type="text" id="number" name="number" class="form-control" placeholder="Number Only"
+               oninput="value=value.replace(/[^\d]/g,'')" required autofocus>
+    </div>
+    <div>
+        <label for="teanumber" class="sr-only">Teacher Number</label>
+        <p>Teacher Number</p>
+        <input type="text" id="teanumber" name="teanumber" class="form-control" placeholder="Number Only"
+               oninput="value=value.replace(/[^\d]/g,'')" required>
+    </div>
+    <div>
+        <label for="name" class="sr-only">Lesson Name</label>
+        <p>Lesson Name</p>
+        <input type="text" id="name" name="name" class="form-control" placeholder="Lesson Name" disabled>
+    </div>
+    <div>
+        <label for="dscpt" class="sr-only">Description</label>
+        <p>Description</p>
+        <input type="text" id="dscpt" name="dscpt" class="form-control" placeholder="Description" disabled>
+    </div>
+    <div>
+        <label for="dept" class="sr-only">Department Number</label>
+        <p>Department Number</p>
+        <input type="text" id="dept" name="dept" class="form-control" placeholder="Department Number" disabled>
+    </div>
+    <div>
+        <label for="credit" class="sr-only">Credits</label>
+        <p>Credits</p>
+        <input type="text" id="credit" name="credit" class="form-control" placeholder="Credits" disabled>
+    </div>
+    <!--<button class="btn btn-lg btn-primary btn-block" formmethod="post" formaction="/FindTeacher">Find</button>-->
+    <!--<button class="btn btn-lg btn-primary btn-block" id="find" onclick="fuck()">Find</button>-->
+    <br><input type="button" class="btn btn-lg btn-primary btn-block" id="find" value="Find" onclick="FindLsn()" >
+    <input type="button" class="btn btn-lg btn-primary btn-block" id="update"
+           value="Update Lesson Info" onclick="UpdateLsn()">
+    <input type="button" class="btn btn-lg btn-primary btn-block" id="add"
+           value="Add as New Lesson" onclick="AddLsn()">
+    <input type="button" class="btn btn-lg btn-primary btn-block" id="delete"
+           value="Delete Lesson" onclick="DelLsn()">
+    <!--<input type="reset" class="btn btn-lg btn-primary btn-block" id="reset" hidden>-->
+    <p class="text-center mt-5 mb-3 text-muted">&copy; Peng You && Bootstrap 2018</p>
+</form>
+</body>
+<script>
+    function FindLsn() {
+        var number = $("#number").val();
+        var teano = $("#teanumber").val();
+        if(teano == "" || teano == null) {
+            alert("Please Enter Teacher Number.");
+        } else {
+            $.ajax({
+                url:"/FindLsn",
+                type:"post",
+                data:"&number="+number+"&teano="+teano,
+                dataType:"json",
+                success:function (map) {
+                    alert(map.result);
+                    if (map.result == "success") {
+                        $("#name").val(map.name);
+                        $("#dscpt").val(map.dscpt);
+                        $("#dept").val(map.dept);
+                        $("#credit").val(map.credit);
+                        setDisabled(false);
+                    } else {
+                        reset();
+                        setDisabled(true);
+                    }
+                },
+                error:function () {
+                    alert("something wrong");
+                    reset();
+                    setDisabled(true);
+                }
+            })
+        }
+    }
+    function UpdateLsn() {
+        var number = $("#number").val();
+        var teano = $("#teanumber").val();
+        var name = $("#name").val();
+        var dscpt = $("#dscpt").val();
+        var dept = $("#dept").val();
+        var credit = $("#credit").val();
+        if(confirm("确定更新课程信息吗？")) {
+            if(teano == "" || teano == null) {
+                alert("Please Enter Teacher Number.");
+            } else {
+                $.ajax({
+                    url:"/UpdateLsn",
+                    type:"post",
+                    data:"&number="+number+"&teano="+teano+"&name="+name+"&dscpt="+dscpt+"&dept="+dept+"&credit="+credit,
+                    dataType:"text",
+                    success:function (result) {
+                        alert(result);
+                        if(result == "not found") {
+                            reset();
+                            setDisabled(true);
+                        }
+                    },
+                    error:function () {
+                        alert("something wrong");
+                        reset();
+                        setDisabled(true);
+                    }
+                })
+            }
+        }
+    }
+    function DelLsn() {
+        var number = $("#number").val();
+        var teano = $("#teanumber").val();
+        if(confirm("确定删除课程吗？")) {
+            if(teano == "" || teano == null) {
+                alert("Please Enter Teacher Number.");
+            } else {
+                $.ajax({
+                    url:"/DelLsn",
+                    type:"post",
+                    data:"&number="+number+"&teano="+teano,
+                    dataType:"text",
+                    success:function (result) {
+                        alert(result);
+                        reset();
+                        setDisabled(true);
+                    },
+                    error:function () {
+                        alert("something wrong");
+                    }
+                })
+            }
+            reset();
+            setDisabled(true);
+        }
+    }
+    function AddLsn() {
+        var number = $("#number").val();
+        var teano = $("#teanumber").val();
+        var name = $("#name").val();
+        var dscpt = $("#dscpt").val();
+        var dept = $("#dept").val();
+        var credit = $("#credit").val();
+        setDisabled(false);
+        // $("#name").attr("disabled", false);
+        if(name == "" || name == null) {
+            alert("Please Enter Lesson name.");
+        }
+        else if(confirm("确定添加课程吗？")) {
+            if(teano == "" || teano == null) {
+                alert("Please Enter Teacher Number.");
+            } else {
+                $.ajax({
+                    url:"/AddLsn",
+                    type:"post",
+                    data:"&number="+number+"&teano="+teano+"&name="+name+"&dscpt="+dscpt+"&dept="+dept+"&credit="+credit,
+                    dataType:"text",
+                    success:function (result) {
+                        alert(result);
+                    },
+                    error:function () {
+                        alert("something wrong");
+                    }
+                })
+            }
+            reset();
+            setDisabled(true);
+        }
+    }
+    function setDisabled(status) {
+        $("#name").attr("disabled", status);
+        $("#dscpt").attr("disabled", status);
+        $("#dept").attr("disabled", status);
+        $("#credit").attr("disabled", status);
+    }
+    function reset() {
+        $("#name").val();
+        $("#dscpt").val();
+        $("#dept").val();
+        $("#credit").val();
+    }
+</script>
+</html>

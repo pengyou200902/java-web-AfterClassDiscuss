@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>Show Detail</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" type="text/css">
+
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/board.css}" rel="stylesheet" type="text/css">
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div th:replace="TopNavBar :: topbar"></div>
+    <div th:if="${infoMap.acctype} eq 'student'" ><div th:replace="LeftSideBar :: stuleftbar"></div></div>
+    <div th:if="${infoMap.acctype} eq 'teacher'" ><div th:replace="LeftSideBar :: tealeftbar"></div></div>
+    <div th:if="${infoMap.acctype} eq 'admin'" ><div th:replace="LeftSideBar :: adminleftbar"></div></div>
+    <div class="container-fluid">
+        <div class="row">
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                <h2 th:text="'Question Details'"></h2>
+                <div class="list-group-item" style="background: #9fcdff;" th:each="myTopic:${myTopics}">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title" th:text="'#'+${myTopic.quesOrder}+' Title: '+${myTopic.title}"></h4>
+                        </div>
+                        <h6 class="card-title" th:id="'questioner'+${myTopic.quesNo}"
+                            th:text="'Question ID: '+${myTopic.quesNo}+' Questioner: '+${myTopic.questioner}"></h6>
+                        <h6 class="card-title" th:id="'time'+${myTopic.quesNo}" th:text="'Time: '+${myTopic.time}"></h6>
+                        <h6 class="card-title" th:text="'Lesson: '+${myTopic.lsnName}+' Teacher: '+${myTopic.teaName}"></h6>
+                        <div class="panel-body" th:text="${myTopic.content}"></div><br>
+                        <!--<button th:id="'see'+${myTopic.quesNo}" class="btn-primary" act;>See Answers</button>&nbsp;-->
+                        <!--<div style="float: right;">-->
+                            <!--<button th:id="'del'+${myTopic.quesNo}" class="btn-primary" onclick=delQues($(this).attr("id"))>Delete</button><br>-->
+                        <!--</div>-->
+                    </div>
+                </div>
+                <div>
+                    <br><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
+                                aria-expanded="false" aria-controls="collapseExample" th:text="'Click to See Answers'">
+
+                    </button>
+                    <div class="collapse list-group-item" id="collapseExample" th:each="answer:${answers}" th:fragment="showAns">
+                        <!--<div class="card card-body" >-->
+                            <!--Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.-->
+                        <!--</div>-->
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title" th:text="'回答#'+${answer.ansOrder}"></h4>
+                            </div>
+                            <h6 class="card-title" th:text="' Answer ID: '+${answer.ansNo}"></h6>
+                            <h6 class="card-title" th:text="'Time: '+${answer.ansTime}"></h6>
+                            <!--<h6 class="card-title" th:text="'Lesson: '+${myTopic.lsnName}+' Teacher: '+${myTopic.teaName}"></h6>-->
+                            <div class="panel-body" th:text="${answer.ansContent}"></div><br>
+                            <!--<div th:if="${infoMap.acctype eq 'admin' || infoMap.acc eq topic.acc}" style="float: right;">-->
+                                <!--<button th:id="'del'+${topic.quesNo}" class="btn-primary" onclick=alert($(this).attr("id"))>Delete</button>-->
+                            <!--</div>-->
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" th:src="@{/js/jquery-3.3.1.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.bundle.js}"></script>
+<script type="text/javascript" th:src="@{/js/feather.min.js}"></script>
+</html>

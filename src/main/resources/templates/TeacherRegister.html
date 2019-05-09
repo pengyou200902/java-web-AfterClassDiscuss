@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Teachers Register</title>
+    <!--<link rel="stylesheet" href="../../static/css/bootstrap.css">-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!--<script src="../../static/js/jquery-3.3.1.js"></script>-->
+    <!--<script src="../../static/js/bootstrap.bundle.js"></script>-->
+    <script type="text/javascript" th:src="@{/js/jquery-3.3.1.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.bundle.js}"></script>
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/signin.css}" rel="stylesheet" type="text/css">
+
+</head>
+<body class="text-center">
+<form class="form-signin">
+    <!--<img class="mb-4" src="/docs/4.2/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">-->
+    <h1 class="h3 mb-9 font-weight-normal">Teachers Sign Up</h1>
+    <label for="number" class="sr-only">Your Teacher Number</label>
+    <input type="text" id="number" name="number" class="form-control" placeholder="Number Only"
+           oninput="value=value.replace(/[^\d]/g,'')" required autofocus>
+    <label for="password" class="sr-only">Password</label>
+    <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+    <label for="name" class="sr-only">Name</label>
+    <input type="text" id="name" name="name" class="form-control" placeholder="Your name" required>
+    <div class="custom-radio mb-2">
+        <label>
+            <input type="radio" name="gender" value="男"> Male &nbsp;&nbsp;
+            <input type="radio" name="gender" value="女"> Female
+        </label>
+    </div>
+    <label class="sr-only" for="deptNo">Department Name</label>
+    <input class="form-control" id="deptNo" list="deptList" name="deptNo" oninput="value=value.replace(/[^\d]/g,'')"
+           placeholder="Your department number" required type="text">
+    <datalist id="deptList">
+        <div th:replace="DepartmentList :: deptList"></div>
+        <!--<option>101-光电信息与计算机工程学院</option>-->
+        <!--<option>102-管理学院</option>-->
+        <!--<option>103-能源与动力学院</option>-->
+    </datalist>
+    <label class="sr-only" for="teaLevel">Teacher Level</label>
+    <input type="text" id="teaLevel" name="teaLevel" class="form-control" placeholder="Teacher Level" required>
+    <label class="sr-only" for="teaDscpt">Teacher Description</label>
+    <input type="text" id="teaDscpt" name="teaDscpt" class="form-control" placeholder="Teacher Description" required>
+    <label class="sr-only" for="salary">Teacher Salary</label>
+    <input type="text" id="salary" name="salary" class="form-control" placeholder="Teacher Salary" required>
+    <label class="sr-only" for="id">Identification Number</label>
+    <input type="text" id="id" name="id" class="form-control" placeholder="Teacher's personal ID"
+           oninput="value=value.replace(/[^\d]/g,'')" required>
+    <label class="sr-only" for="phone">Phone Number</label>
+    <input class="form-control" id="phone" name="phone" placeholder="Teacher's Phone Number"
+           oninput="value=value.replace(/[^\d]/g,'')" required type="text">
+    <!--<p id="telephoneError" style="margin-bottom: -2px;color: red;"></p>-->
+    <button class="btn btn-lg btn-primary btn-block" formaction="/TeacherRegister" formmethod="post" type="submit">Sign up</button>
+    <p class="mt-5 mb-3 text-muted">&copy; Peng You && Bootstrap 2018</p>
+</form>
+</body>
+<script>
+    $(document).ready(function () {
+//敲击按键时触发
+        $("#salary").bind("keypress", function (event) {
+            var event = event || window.event;
+            var getValue = $(this).val();
+//控制第一个不能输入小数点"."
+            if (getValue.length == 0 && event.which == 46) {
+                event.preventDefault();
+                return;
+            }
+//控制只能输入一个小数点"."
+            if (getValue.indexOf('.') != -1 && event.which == 46) {
+                event.preventDefault();
+                return;
+            }
+        $("#Score").bind("blur", function (event) {
+            var value = $(this).val(), reg = /\.$/;
+            if (reg.test(value)) {
+                value = value.replace(reg, "");
+                $(this).val(value);
+            }
+        })
+    });
+</script>
+</html>

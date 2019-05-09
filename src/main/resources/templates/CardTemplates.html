@@ -1,0 +1,46 @@
+<div class="card" style="width: 18rem;float: left;" th:fragment="ShowAllQuestion">
+    <!--<img src="..." class="card-img-top" alt="...">-->
+    <div class="card-body">
+        <h5 class="card-title" th:text="'All Questions ('+${countMap.all}+')'"></h5>
+        <p class="card-text">See all Questions</p>
+        <a th:href="@{/ShowAllQuestion}" class="btn btn-primary">Go to See</a>
+        <!--<a th:href="@{/ShowQuestion_Stu}" class="btn btn-primary">Go to See</a>-->
+    </div>
+</div>
+
+
+<div class="card" style="width: 18rem;float: left;" th:fragment="ShowMyQuestion">
+    <!--<img src="..." class="card-img-top" alt="...">-->
+    <div class="card-body">
+        <h5 class="card-title" th:text="'My Questions ('+${countMap.my}+')'"></h5>
+        <p class="card-text">Show My Questions</p>
+        <a th:href="@{/ShowMyQues}" class="btn btn-primary">Go to See</a>
+    </div>
+</div>
+
+<div class="card" style="width: 18rem;float: left;" th:fragment="ShowMyAnswer">
+    <!--<img src="..." class="card-img-top" alt="...">-->
+    <div class="card-body">
+        <h5 class="card-title" th:text="'My Answers ('+${countMap.myAns}+')'"></h5>
+        <p class="card-text">Show My Answers</p>
+        <a th:href="@{/ShowMyAns}" class="btn btn-primary">Go to See</a>
+    </div>
+</div>
+
+<div class="card" style="width: 18rem;float: left;" th:fragment="NeedAnswer">
+    <!--<img src="..." class="card-img-top" alt="...">-->
+    <div class="card-body">
+        <h5 class="card-title" th:text="'Answers Needed ('+${countMap.needAns}+')'"></h5>
+        <p class="card-text">Show Questions that Needs Answer</p>
+        <a th:href="@{/NeedAnswer}" class="btn btn-primary">Go to See</a>
+    </div>
+</div>
+
+<div class="card" style="width: 18rem;float: left;" th:fragment="ShowAllAnswer">
+    <!--<img src="..." class="card-img-top" alt="...">-->
+    <div class="card-body">
+        <h5 class="card-title" th:text="'All Answers ('+${countMap.allAns}+')'"></h5>
+        <p class="card-text">Show All Answers</p>
+        <a th:href="@{/ShowAllAns}" class="btn btn-primary">Go to See</a>
+    </div>
+</div>

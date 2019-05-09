@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Find Account</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script type="text/javascript" th:src="@{/js/jquery-3.3.1.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.bundle.js}"></script>
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/signin.css}" rel="stylesheet" type="text/css">
+    <style>
+        p{
+            margin-bottom:1px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<form class="form-signin">
+    <h1 class="text-center h3 mb-9 font-weight-normal">Find Teacher By Number</h1><br>
+    <div>
+    <label for="number" class="sr-only">Your Number</label>
+    <p>Number</p>
+    <input type="text" id="number" name="number" class="form-control" placeholder="Number Only"
+           oninput="value=value.replace(/[^\d]/g,'')" required autofocus>
+    </div>
+    <!--<label for="Password" class="sr-only">Password</label>-->
+    <!--<input type="password" id="Password" name="password" class="form-control" placeholder="Password">-->
+    <div>
+    <label for="name" class="sr-only">Name</label>
+    <p>Name</p>
+    <input type="text" id="name" name="name" class="form-control" placeholder="Name" disabled >
+    </div>
+    <div>
+    <label for="gender" class="sr-only">Gender</label>
+    <p>Gender</p>
+    <input type="text" id="gender" name="gender" class="form-control" placeholder="Gender" disabled>
+    </div>
+    <div>
+    <label class="sr-only" for="dept">Department Name</label>
+    <p>Department</p>
+    <input class="form-control" id="dept" name="dept" placeholder="Department" type="text" disabled >
+    </div>
+    <div>
+    <label class="sr-only" for="id">Identification Number</label>
+    <p>Personal ID</p>
+    <input class="form-control" id="id" name="id" placeholder="Personal ID" disabled type="text" oninput="value=value.replace(/[^\d]/g,'')">
+    </div>
+    <div>
+    <label class="sr-only" for="Phone">Phone Number</label>
+    <p>Phone</p>
+    <input class="form-control" id="Phone" name="phone" placeholder="Phone Number" disabled type="text" oninput="value=value.replace(/[^\d]/g,'')">
+    </div>
+    <!--<button class="btn btn-lg btn-primary btn-block" formmethod="post" formaction="/FindTeacher">Find</button>-->
+    <!--<button class="btn btn-lg btn-primary btn-block" id="find" onclick="fuck()">Find</button>-->
+    <br><input type="button" class="btn btn-lg btn-primary btn-block" id="find" value="Find" onclick="FindTea()" >
+    <input type="button" class="btn btn-lg btn-primary btn-block" id="update"
+                                        value="Update Teacher Info" onclick="UpdateTeacher()">
+    <input type="button" class="btn btn-lg btn-primary btn-block" id="delete"
+                                        value="Delete Teacher" onclick="DelTeacher()">
+    <input type="reset" class="btn btn-lg btn-primary btn-block" id="reset" hidden>
+    <p class="text-center mt-5 mb-3 text-muted">&copy; Peng You && Bootstrap 2018</p>
+</form>
+</body>
+<script>
+    function FindTea() {
+        //获取值
+        var number = $("#number").val();
+        // var hobby = $("input[name='hobby']:checked").serialize();    //此处为复选框,用序列化的方式传递
+        $.ajax({
+            url:"/FindTeacher",
+            type:"post",
+            //注意序列化的值一定要放在最前面,并且不需要头部变量,不然获取的值得格式会有问题
+            data:"&number="+number,
+            dataType:"json",
+            success:function (data) {
+                // var teacher = JSON.parse(data);  返回map就多余
+                if (data.teaname == "" || data.teaname == null) {
+                    alert("not found");
+                    $("#name").attr("disabled",true);
+                    $("#gender").attr("disabled",true);
+                    $("#dept").attr("disabled",true);
+                    $("#id").attr("disabled",true);
+                    $("#Phone").attr("disabled",true);
+                } else {
+                    alert("success");
+                    $("#name").attr("disabled",false);
+                    $("#gender").attr("disabled",false);
+                    $("#dept").attr("disabled",false);
+                    $("#id").attr("disabled",false);
+                    $("#Phone").attr("disabled",false);
+                }
+                // alert(data.toString());
+                $("#name").val(data.teaname);
+                $("#gender").val(data.gender);
+                $("#dept").val(data.dept);
+                $("#id").val(data.id);
+                $("#Phone").val(data.phone);
+            },
+            error:function() {
+                alert("something wrong");
+                $("#name").attr("disabled",true);
+                $("#gender").attr("disabled",true);
+                $("#dept").attr("disabled",true);
+                $("#id").attr("disabled",true);
+                $("#Phone").attr("disabled",true);
+            }
+        })
+    }
+    function DelTeacher() {
+        //获取值
+        var number = $("#number").val();
+        // var hobby = $("input[name='hobby']:checked").serialize();    //此处为复选框,用序列化的方式传递
+        $.ajax({
+            url:"/DelTeacher",
+            type:"post",
+            //注意序列化的值一定要放在最前面,并且不需要头部变量,不然获取的值得格式会有问题
+            data:"&number="+number,
+            dataType:"text",
+            success:function (result) {
+                // var teacher = JSON.parse(data);  返回map就多余
+                alert(result);
+            },
+            error:function(result) {
+                alert("something wrong");
+                // alert(result);
+            },
+
+        })
+        $("#reset").click();
+    }
+    function UpdateTeacher() {
+        //获取值
+        var number = $("#number").val();
+        var name = $("#name").val();
+        var gender = $("#gender").val();
+        var dept = $("#dept").val();
+        var id = $("#id").val();
+        var phone = $("#Phone").val();
+
+        // var hobby = $("input[name='hobby']:checked").serialize();    //此处为复选框,用序列化的方式传递
+        $.ajax({
+            url:"/UpdateTeacher",
+            type:"post",
+            //注意序列化的值一定要放在最前面,并且不需要头部变量,不然获取的值得格式会有问题
+            data:"&number="+number+"&name"+name+"&gender"+gender+"&deptname"+dept+"&id"+id+"&phone"+phone,
+            dataType:"json",
+            success:function (result) {
+                alert(result);
+            },
+            error:function () {
+                alert("something wrong");
+                $("#name").attr("disabled",true);
+                $("#gender").attr("disabled",true);
+                $("#dept").attr("disabled",true);
+                $("#id").attr("disabled",true);
+                $("#Phone").attr("disabled",true);
+                $("#name").reset();
+                $("#gender").reset();
+                $("#dept").reset();
+                $("#id").reset();
+                $("#Phone").reset();
+            }
+
+        })
+    }
+</script>
+</html>

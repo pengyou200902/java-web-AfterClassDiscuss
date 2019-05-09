@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Find Department</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script type="text/javascript" th:src="@{/js/jquery-3.3.1.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.bundle.js}"></script>
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/signin.css}" rel="stylesheet" type="text/css">
+    <style>
+        p{
+            margin-bottom:1px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<form class="form-signin">
+    <h1 class="text-center h3 mb-9 font-weight-normal">Find Department By Number</h1><br>
+    <div>
+        <label for="number" class="sr-only">Department Number</label>
+        <p>Department Number</p>
+        <input type="text" id="number" name="number" class="form-control" placeholder="Number Only"
+               oninput="value=value.replace(/[^\d]/g,'')" required autofocus>
+    </div>
+    <div>
+        <label for="name" class="sr-only">Department Name</label>
+        <p>Department Name</p>
+        <input type="text" id="name" name="name" class="form-control" placeholder="Department Name" disabled>
+    </div>
+    <!--<button class="btn btn-lg btn-primary btn-block" formmethod="post" formaction="/FindTeacher">Find</button>-->
+    <!--<button class="btn btn-lg btn-primary btn-block" id="find" onclick="fuck()">Find</button>-->
+    <br><input type="button" class="btn btn-lg btn-primary btn-block" id="find" value="Find" onclick="FindDept()" >
+    <input type="button" class="btn btn-lg btn-primary btn-block" id="update"
+           value="Update Department Info" onclick="UpdateDept()">
+    <input type="button" class="btn btn-lg btn-primary btn-block" id="add"
+           value="Add as New Department" onclick="AddDept()">
+    <input type="button" class="btn btn-lg btn-primary btn-block" id="delete"
+           value="Delete Department" onclick="DelDept()">
+    <input type="reset" class="btn btn-lg btn-primary btn-block" id="reset" hidden>
+    <p class="text-center mt-5 mb-3 text-muted">&copy; Peng You && Bootstrap 2018</p>
+</form>
+</body>
+<script>
+    function FindDept() {
+        var number = $("#number").val();
+        $.ajax({
+            url:"/FindDepartment",
+            type:"post",
+            data:"&number="+number,
+            dataType:"json",
+            success:function (map) {
+                alert(map.result);
+                if (map.result == "Successfully found!") {
+                    $("#name").val(map.deptName);
+                    $("#name").attr("disabled", false);
+                } else {
+                    $("#name").val();
+                    $("#name").attr("disabled", true);
+                }
+            },
+            error:function () {
+                alert("something wrong");
+                $("#name").val();
+                $("#name").attr("disabled", true);
+            }
+        })
+    }
+    function UpdateDept() {
+        var number = $("#number").val();
+        var deptName = $("#name").val();
+        if(confirm("确定更新学院信息吗？")) {
+            $.ajax({
+                url:"/UpdateDepartment",
+                type:"post",
+                data:"&number="+number+"&deptName="+deptName,
+                dataType:"text",
+                success:function (result) {
+                    alert(result);
+                    if(result == "not found") {
+                        $("#name").val();
+                        $("#name").attr("disabled", true);
+                    }
+                },
+                error:function () {
+                    alert("something wrong");
+                    $("#name").val();
+                    $("#name").attr("disabled", true);
+                }
+            })
+        }
+    }
+    function DelDept() {
+        var number = $("#number").val();
+        var deptName = $("#name").val();
+        if(confirm("确定删除学院吗？")) {
+            $.ajax({
+                url:"/DelDepartment",
+                type:"post",
+                data:"&number="+number+"&deptName="+deptName,
+                dataType:"text",
+                success:function (result) {
+                    alert(result);
+                },
+                error:function () {
+                    alert("something wrong");
+                }
+            })
+            $("#name").val("");
+            $("#name").attr("disabled", true);
+        }
+    }
+    function AddDept() {
+        var number = $("#number").val();
+        var deptName = $("#name").val();
+        if($("#name").attr("disabled") == "disabled") {
+            $("#name").attr("disabled", false);
+        }
+        // $("#name").attr("disabled", false);
+        if(deptName == "" || deptName == null) {
+            alert("Please Enter Department name.");
+        }
+        else if(confirm("确定添加学院吗？")) {
+            $.ajax({
+                url:"/AddDepartment",
+                type:"post",
+                data:"&number="+number+"&deptName="+deptName,
+                dataType:"text",
+                success:function (result) {
+                    alert(result);
+                },
+                error:function () {
+                    alert("something wrong");
+                }
+            })
+            $("#name").val("");
+            $("#name").attr("disabled", true);
+        }
+    }
+
+</script>
+</html>

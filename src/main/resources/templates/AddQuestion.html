@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>Add Question</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" type="text/css">
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/board.css}" rel="stylesheet" type="text/css">
+    <style>
+        p{
+            margin-bottom:1px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div th:replace="TopNavBar :: topbar"></div>
+    <div th:replace="LeftSideBar :: stuleftbar"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4"><br>
+                <!--<h2 class="h2">Section title</h2>-->
+                <form class="form-group">
+                    <h1 class="text-center h3 mb-9 font-weight-normal">New Question</h1><br>
+                    <div>
+                        <label for="lsnNo" class="sr-only">Lesson Number</label>
+                        <p>Lesson Number</p>
+                        <input type="text" id="lsnNo" name="lsnNo" class="form-control" placeholder="Number Only"
+                               oninput="value=value.replace(/[^\d]/g,'')" required autofocus>
+                    </div>
+                    <div>
+                        <label for="teaNo" class="sr-only">Teacher Number</label>
+                        <p>Teacher Number</p>
+                        <input type="text" id="teaNo" name="teaNo" class="form-control" placeholder="Number Only"
+                               oninput="value=value.replace(/[^\d]/g,'')" required>
+                    </div>
+                    <div>
+                        <label for="topicNo" class="sr-only">Topic Number</label>
+                        <p>Topic Number</p>
+                        <input type="text" id="topicNo" name="topicNo" class="form-control" placeholder="Number Only"
+                               oninput="value=value.replace(/[^\d]/g,'')" required>
+                    </div>
+                    <div>
+                        <label for="title" class="sr-only">Title</label>
+                        <p>Title</p>
+                        <input type="text" id="title" name="title" class="form-control" placeholder="Title">
+                    </div>
+                    <div>
+                        <label for="content" class="sr-only">Content</label>
+                        <p>Content</p>
+                        <textarea type="text" id="content" name="content" class="form-control" placeholder="Content"></textarea>
+                    </div>
+
+                    <br><input type="button" class="btn-lg btn-primary btn" id="add" value="Add" onclick="addQues()" >
+                    <!--<input type="button" class="btn-lg btn-primary btn" id="update"-->
+                           <!--value="Update Teacher Info" onclick="UpdateTeacher()">-->
+                    <!--<input type="button" class="btn-lg btn-primary btn" id="delete"-->
+                           <!--value="Delete Teacher" onclick="DelTeacher()">-->
+                    <input type="reset" class="btn-lg btn-primary btn" id="reset" hidden>
+                    <p class="text-center mt-5 mb-3 text-muted">&copy; Peng You && Bootstrap 2018</p>
+                </form>
+            </main>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" th:src="@{/js/jquery-3.3.1.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.bundle.js}"></script>
+<script type="text/javascript" th:src="@{/js/feather.min.js}"></script>
+<script>
+    function addQues() {
+        var lsnNo = $("#lsnNo").val();
+        var teaNo = $("#teaNo").val();
+        var topicNo = $("#topicNo").val();
+        var title = $("#title").val();
+        var content = $("#content").val();
+        var a = checkInput(lsnNo);
+        var b = checkInput(teaNo);
+        var c = checkInput(title);
+        var d = checkInput(content);
+        var e = checkInput(topicNo);
+        if(a && b && c && d && e) {
+            if(confirm("确定添加提问吗？")) {
+                $.ajax({
+                    url:"/AddQues",
+                    type:"post",
+                    data:"&lsnNo="+lsnNo+"&teaNo="+teaNo+"&topicNo="+topicNo+"&title="+title+"&content="+content,
+                    dataType:"text",
+                    success:function (result) {
+                        alert(result);
+                    },
+                    error:function () {
+                        alert("something wrong");
+                    }
+                })
+            }
+        } else {
+            alert("Please check your input!")
+        }
+    }
+    function checkInput(data) {
+        if(data != null && data !=""){
+            return true;
+        } else return false;
+    }
+</script>
+</html>

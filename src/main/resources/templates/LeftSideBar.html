@@ -1,0 +1,155 @@
+<nav class="col-md-2 d-none d-md-block bg-light sidebar" th:fragment="stuleftbar">
+    <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" th:href="@{/Dashboard}">
+                    <span data-feather="home"></span>
+                    Dashboard <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/ChangePassword}">
+                    <span data-feather="file"></span>
+                    Change Password
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/ShowMyQues}">
+                    <span data-feather="shopping-cart"></span>
+                    My Questions
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/ShowAllQuestion}">
+                    <span data-feather="users"></span>
+                    All Questions
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/AddQuestion}">
+                    <span data-feather="bar-chart-2"></span>
+                    Add Question
+                </a>
+            </li>
+            <!--<li class="nav-item">-->
+                <!--<a class="nav-link" href="#">-->
+                    <!--<span data-feather="layers"></span>-->
+                    <!--Integrations-->
+                <!--</a>-->
+            <!--</li>-->
+        </ul>
+    </div>
+</nav>
+
+<nav class="col-md-2 d-none d-md-block bg-light sidebar" th:fragment="adminleftbar">
+    <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" th:href="@{/Dashboard}">
+                    <span data-feather="home"></span>
+                    Dashboard <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/ChangePassword}">
+                    <span data-feather="file"></span>
+                    Change Password
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/AddTeacher}">
+                    <span data-feather="shopping-cart"></span>
+                    Add Teacher
+                </a>
+            </li>
+            <!--<li class="nav-item">-->
+                <!--<a class="nav-link" th:href="@{/AddStu}">-->
+                    <!--<span data-feather="users"></span>-->
+                    <!--Add Student-->
+                <!--</a>-->
+            <!--</li>-->
+        </ul>
+
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+            <span>Update Infomation</span>
+            <a class="d-flex align-items-center text-muted" href="#">
+                <span data-feather="plus-circle"></span>
+            </a>
+        </h6>
+        <ul class="nav flex-column mb-2">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/FindLesson}">
+                    <span data-feather="file-text"></span>
+                    Course Management
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/FindAccount}">
+                    <span data-feather="file-text"></span>
+                    Teacher Management
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/FindDept}">
+                    <span data-feather="file-text"></span>
+                    Department Management
+                </a>
+            </li>
+            <!--<li class="nav-item">-->
+                <!--<a class="nav-link" th:href="@{/Teaches}">-->
+                    <!--<span data-feather="file-text"></span>-->
+                    <!--Teaches Management-->
+                <!--</a>-->
+            <!--</li>-->
+        </ul>
+    </div>
+</nav>
+
+<nav class="col-md-2 d-none d-md-block bg-light sidebar" th:fragment="tealeftbar">
+    <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" th:href="@{/Dashboard}">
+                    <span data-feather="home"></span>
+                    Dashboard <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/ChangePassword}">
+                    <span data-feather="file"></span>
+                    Change Password
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/ShowMyQues}">
+                    <span data-feather="shopping-cart"></span>
+                    My Questions
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/ShowAllQuestion}">
+                    <span data-feather="users"></span>
+                    All Questions
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/ShowMyAns}">
+                    <span data-feather="bar-chart-2"></span>
+                    My Answers
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/NeedAnswer}">
+                    <span data-feather="layers"></span>
+                    Answers Needed
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/AddAnswer}">
+                    <span data-feather="layers"></span>
+                    Add Answer
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

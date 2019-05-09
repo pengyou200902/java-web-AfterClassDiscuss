@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.friend.py.dao.LessonMapper" >
+  <resultMap id="BaseResultMap" type="com.friend.py.model.Lesson" >
+    <id column="lsnNo" property="lsnno" jdbcType="VARCHAR" />
+    <id column="teaNo" property="teano" jdbcType="VARCHAR" />
+    <result column="lsnName" property="lsnname" jdbcType="VARCHAR" />
+    <result column="dscpt" property="dscpt" jdbcType="VARCHAR" />
+    <result column="deptNo" property="deptno" jdbcType="VARCHAR" />
+    <result column="credits" property="credits" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    lsnNo, teaNo, lsnName, dscpt, deptNo, credits
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.friend.py.model.LessonExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from lesson
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.friend.py.model.LessonKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from lesson
+    where lsnNo = #{lsnno,jdbcType=VARCHAR}
+      and teaNo = #{teano,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.friend.py.model.LessonKey" >
+    delete from lesson
+    where lsnNo = #{lsnno,jdbcType=VARCHAR}
+      and teaNo = #{teano,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.friend.py.model.LessonExample" >
+    delete from lesson
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.friend.py.model.Lesson" >
+    insert into lesson (lsnNo, teaNo, lsnName, 
+      dscpt, deptNo, credits
+      )
+    values (#{lsnno,jdbcType=VARCHAR}, #{teano,jdbcType=VARCHAR}, #{lsnname,jdbcType=VARCHAR}, 
+      #{dscpt,jdbcType=VARCHAR}, #{deptno,jdbcType=VARCHAR}, #{credits,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.friend.py.model.Lesson" >
+    insert into lesson
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="lsnno != null" >
+        lsnNo,
+      </if>
+      <if test="teano != null" >
+        teaNo,
+      </if>
+      <if test="lsnname != null" >
+        lsnName,
+      </if>
+      <if test="dscpt != null" >
+        dscpt,
+      </if>
+      <if test="deptno != null" >
+        deptNo,
+      </if>
+      <if test="credits != null" >
+        credits,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="lsnno != null" >
+        #{lsnno,jdbcType=VARCHAR},
+      </if>
+      <if test="teano != null" >
+        #{teano,jdbcType=VARCHAR},
+      </if>
+      <if test="lsnname != null" >
+        #{lsnname,jdbcType=VARCHAR},
+      </if>
+      <if test="dscpt != null" >
+        #{dscpt,jdbcType=VARCHAR},
+      </if>
+      <if test="deptno != null" >
+        #{deptno,jdbcType=VARCHAR},
+      </if>
+      <if test="credits != null" >
+        #{credits,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.friend.py.model.LessonExample" resultType="java.lang.Integer" >
+    select count(*) from lesson
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update lesson
+    <set >
+      <if test="record.lsnno != null" >
+        lsnNo = #{record.lsnno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teano != null" >
+        teaNo = #{record.teano,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lsnname != null" >
+        lsnName = #{record.lsnname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dscpt != null" >
+        dscpt = #{record.dscpt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deptno != null" >
+        deptNo = #{record.deptno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.credits != null" >
+        credits = #{record.credits,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update lesson
+    set lsnNo = #{record.lsnno,jdbcType=VARCHAR},
+      teaNo = #{record.teano,jdbcType=VARCHAR},
+      lsnName = #{record.lsnname,jdbcType=VARCHAR},
+      dscpt = #{record.dscpt,jdbcType=VARCHAR},
+      deptNo = #{record.deptno,jdbcType=VARCHAR},
+      credits = #{record.credits,jdbcType=TINYINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.friend.py.model.Lesson" >
+    update lesson
+    <set >
+      <if test="lsnname != null" >
+        lsnName = #{lsnname,jdbcType=VARCHAR},
+      </if>
+      <if test="dscpt != null" >
+        dscpt = #{dscpt,jdbcType=VARCHAR},
+      </if>
+      <if test="deptno != null" >
+        deptNo = #{deptno,jdbcType=VARCHAR},
+      </if>
+      <if test="credits != null" >
+        credits = #{credits,jdbcType=TINYINT},
+      </if>
+    </set>
+    where lsnNo = #{lsnno,jdbcType=VARCHAR}
+      and teaNo = #{teano,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.friend.py.model.Lesson" >
+    update lesson
+    set lsnName = #{lsnname,jdbcType=VARCHAR},
+      dscpt = #{dscpt,jdbcType=VARCHAR},
+      deptNo = #{deptno,jdbcType=VARCHAR},
+      credits = #{credits,jdbcType=TINYINT}
+    where lsnNo = #{lsnno,jdbcType=VARCHAR}
+      and teaNo = #{teano,jdbcType=VARCHAR}
+  </update>
+</mapper>

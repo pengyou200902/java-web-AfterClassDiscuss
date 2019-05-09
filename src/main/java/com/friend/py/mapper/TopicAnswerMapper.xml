@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.friend.py.dao.TopicAnswerMapper" >
+  <resultMap id="BaseResultMap" type="com.friend.py.model.TopicAnswer" >
+    <id column="ansNo" property="ansno" jdbcType="VARCHAR" />
+    <result column="lsnNo" property="lsnno" jdbcType="VARCHAR" />
+    <result column="topicNo" property="topicno" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="acc" property="acc" jdbcType="VARCHAR" />
+    <result column="moment" property="moment" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ansNo, lsnNo, topicNo, content, acc, moment
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.friend.py.model.TopicAnswerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from topicAnswer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from topicAnswer
+    where ansNo = #{ansno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from topicAnswer
+    where ansNo = #{ansno,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.friend.py.model.TopicAnswerExample" >
+    delete from topicAnswer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.friend.py.model.TopicAnswer" >
+    insert into topicAnswer (ansNo, lsnNo, topicNo, 
+      content, acc, moment
+      )
+    values (#{ansno,jdbcType=VARCHAR}, #{lsnno,jdbcType=VARCHAR}, #{topicno,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{acc,jdbcType=VARCHAR}, #{moment,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.friend.py.model.TopicAnswer" >
+    insert into topicAnswer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ansno != null" >
+        ansNo,
+      </if>
+      <if test="lsnno != null" >
+        lsnNo,
+      </if>
+      <if test="topicno != null" >
+        topicNo,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="acc != null" >
+        acc,
+      </if>
+      <if test="moment != null" >
+        moment,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ansno != null" >
+        #{ansno,jdbcType=VARCHAR},
+      </if>
+      <if test="lsnno != null" >
+        #{lsnno,jdbcType=VARCHAR},
+      </if>
+      <if test="topicno != null" >
+        #{topicno,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="acc != null" >
+        #{acc,jdbcType=VARCHAR},
+      </if>
+      <if test="moment != null" >
+        #{moment,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.friend.py.model.TopicAnswerExample" resultType="java.lang.Integer" >
+    select count(*) from topicAnswer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update topicAnswer
+    <set >
+      <if test="record.ansno != null" >
+        ansNo = #{record.ansno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lsnno != null" >
+        lsnNo = #{record.lsnno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.topicno != null" >
+        topicNo = #{record.topicno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acc != null" >
+        acc = #{record.acc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.moment != null" >
+        moment = #{record.moment,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update topicAnswer
+    set ansNo = #{record.ansno,jdbcType=VARCHAR},
+      lsnNo = #{record.lsnno,jdbcType=VARCHAR},
+      topicNo = #{record.topicno,jdbcType=VARCHAR},
+      content = #{record.content,jdbcType=VARCHAR},
+      acc = #{record.acc,jdbcType=VARCHAR},
+      moment = #{record.moment,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.friend.py.model.TopicAnswer" >
+    update topicAnswer
+    <set >
+      <if test="lsnno != null" >
+        lsnNo = #{lsnno,jdbcType=VARCHAR},
+      </if>
+      <if test="topicno != null" >
+        topicNo = #{topicno,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="acc != null" >
+        acc = #{acc,jdbcType=VARCHAR},
+      </if>
+      <if test="moment != null" >
+        moment = #{moment,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ansNo = #{ansno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.friend.py.model.TopicAnswer" >
+    update topicAnswer
+    set lsnNo = #{lsnno,jdbcType=VARCHAR},
+      topicNo = #{topicno,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      acc = #{acc,jdbcType=VARCHAR},
+      moment = #{moment,jdbcType=TIMESTAMP}
+    where ansNo = #{ansno,jdbcType=VARCHAR}
+  </update>
+</mapper>

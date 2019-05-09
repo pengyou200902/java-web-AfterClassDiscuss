@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Students Register</title>
+    <!--<link rel="stylesheet" href="../../static/css/bootstrap.css">-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!--<script src="../../static/js/jquery-3.3.1.js"></script>-->
+    <!--<script src="../../static/js/bootstrap.bundle.js"></script>-->
+    <script type="text/javascript" th:src="@{/js/jquery-3.3.1.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.bundle.js}"></script>
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/signin.css}" rel="stylesheet" type="text/css">
+
+</head>
+<body class="text-center">
+    <form class="form-signin">
+        <!--<img class="mb-4" src="/docs/4.2/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">-->
+        <h1 class="h3 mb-9 font-weight-normal">Students Sign Up</h1>
+        <label for="Number" class="sr-only">Your Student Number</label>
+        <input type="text" id="Number" name="number" class="form-control" placeholder="Number Only"
+               oninput="value=value.replace(/[^\d]/g,'')" required autofocus>
+        <label for="Password" class="sr-only">Password</label>
+        <input type="password" id="Password" name="password" class="form-control" placeholder="Password" required>
+        <label for="Name" class="sr-only">Name</label>
+        <input type="text" id="Name" name="name" class="form-control" placeholder="Your name" required>
+        <div class="custom-radio mb-2">
+            <label>
+                <input type="radio" name="gender" value="男"> Male &nbsp;&nbsp;
+                <input type="radio" name="gender" value="女"> Female
+            </label>
+        </div>
+        <!--<label for="inYear" class="sr-only">In Year</label>-->
+        <!--<input class="form-control" id="inYear" placeholder="Your first year in this school"-->
+               <!--required type="date">-->
+        <label class="sr-only" for="deptNo">Department Name</label>
+        <input class="form-control" id="deptNo" list="deptList" name="deptNo" oninput="value=value.replace(/[^\d]/g,'')"
+               placeholder="Your department number" required type="text">
+            <datalist id="deptList">
+                <!--<option>101-光电信息与计算机工程学院</option>-->
+                <!--<option>102-管理学院</option>-->
+                <!--<option>103-能源与动力学院</option>-->
+                <div th:replace="DepartmentList :: deptList"></div>
+            </datalist>
+        <label class="sr-only" for="id">Identification Number</label>
+        <input type="text" id="id" name="id" class="form-control" placeholder="Your personal ID"
+               oninput="value=value.replace(/[^\d]/g,'')" required>
+        <label class="sr-only" for="Phone">Phone Number</label>
+        <input class="form-control" id="Phone" name="phone" placeholder="Your Phone Number"
+               oninput="value=value.replace(/[^\d]/g,'')" required type="text">
+        <!--<p id="telephoneError" style="margin-bottom: -2px;color: red;"></p>-->
+        <button class="btn btn-lg btn-primary btn-block" formaction="/AddStu" formmethod="post" type="submit">Sign up</button>
+        <p class="mt-5 mb-3 text-muted">&copy; Peng You && Bootstrap 2018</p>
+    </form>
+</body>
+</html>

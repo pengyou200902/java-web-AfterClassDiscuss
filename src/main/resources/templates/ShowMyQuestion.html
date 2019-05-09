@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>My Question</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" type="text/css">
+
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/board.css}" rel="stylesheet" type="text/css">
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div th:replace="TopNavBar :: topbar"></div><!--<br><br><br><br>-->
+    <div th:if="${infoMap.acctype} eq 'student'" ><div th:replace="LeftSideBar :: stuleftbar"></div></div>
+    <div th:if="${infoMap.acctype} eq 'teacher'" ><div th:replace="LeftSideBar :: tealeftbar"></div></div>
+    <div th:if="${infoMap.acctype} eq 'admin'" ><div th:replace="LeftSideBar :: adminleftbar"></div></div>
+    <div class="container-fluid">
+        <div class="row">
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                <h2 th:text="'My Questions ('+${infoMap.quesQuantity}+')'"></h2>
+                <div class="list-group-item" th:each="myTopic:${myTopics}">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title" th:text="'#'+${myTopic.quesOrder}+' Title: '+${myTopic.title}"></h4>
+                        </div>
+                        <h6 class="card-title" th:id="'questioner'+${myTopic.quesNo}"
+                            th:text="'Question ID: '+${myTopic.quesNo}+' Questioner: '+${myTopic.questioner}"></h6>
+                        <h6 class="card-title" th:id="'time'+${myTopic.quesNo}" th:text="'Time: '+${myTopic.time}"></h6>
+                        <h6 class="card-title" th:text="'Lesson: '+${myTopic.lsnName}+' Teacher: '+${myTopic.teaName}"></h6>
+                        <div class="panel-body" th:text="${myTopic.content}"></div><br>
+                        <!--<input id="quesNo" name="quesNo" type="text" th:value="${myTopic.quesNo}" hidden>-->
+                        <button class="btn-primary" th:id="'see'+${myTopic.quesNo}" onclick=seeAns($(this).attr("id"))>See Answers</button>&nbsp;
+                        <div style="float: right;">
+                            <button th:id="'del'+${myTopic.quesNo}" class="btn-primary" onclick=delQues($(this).attr("id"))>Delete</button><br>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!--<div class="table-responsive">-->
+                    <!--<table class="table table-striped table-sm">-->
+                        <!--<thead>-->
+                        <!--<tr>-->
+                            <!--<th>QuestionNo</th>-->
+                            <!--<th>LessonName</th>-->
+                            <!--<th>TeacherName</th>-->
+                            <!--<th>Title</th>-->
+                            <!--<th>Content</th>-->
+                            <!--<th>Time</th>-->
+                            <!--<th>Questioner</th>-->
+                            <!--<th>Action</th>-->
+                        <!--</tr>-->
+                        <!--</thead>-->
+                        <!--<tbody>-->
+                        <!--<tr th:each="myTopic:${myTopics}">&lt;!&ndash; 其中m是个临时变量，像for(User u : userList)那样中的u&ndash;&gt;-->
+                            <!--<td th:id="'quesOrder'+${myTopic.quesOrder}" th:text="${myTopic.quesOrder}"/>-->
+                            <!--<td th:id="'lsnName'+${myTopic.quesOrder}" th:text="${myTopic.lsnName}"/>-->
+                            <!--<td th:id="'teaName'+${myTopic.quesOrder}" th:text="${myTopic.teaName}"/>-->
+                            <!--<td th:id="'shortTitle'+${myTopic.quesOrder}" th:text="${myTopic.shortTitle}"/>-->
+                            <!--<td th:id="'shortContent'+${myTopic.quesOrder}" th:text="${myTopic.shortContent}"/>-->
+                            <!--<td th:id="'time'+${myTopic.quesOrder}" th:text="${myTopic.time}"/>-->
+                            <!--<td th:id="'questioner'+${myTopic.quesOrder}" th:text="${myTopic.questioner}"/>-->
+                            <!--<td><button th:id="'more'+${myTopic.quesNo}" class="btn-primary" onclick=alert($(this).attr("id"));>More Info</button>&nbsp;-->
+                                <!--<button th:id="'del'+${myTopic.quesNo}" class="btn-primary" onclick=delQues($(this).attr("id"))>Delete</button></td>-->
+                            <!--&lt;!&ndash;<td><button th:if="${infoMap.acctype} eq 'teacher' || ${accMap.acctype} eq 'admin"&ndash;&gt;-->
+                                        <!--&lt;!&ndash;${accMap.acc} eq 'teacher onclick=ahah($(this).attr("id"));>sb</button></td>&ndash;&gt;-->
+                        <!--</tr>-->
+                        <!--</tbody>-->
+                    <!--</table>-->
+                <!--</div>-->
+            </main>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" th:src="@{/js/jquery-3.3.1.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.bundle.js}"></script>
+<script type="text/javascript" th:src="@{/js/feather.min.js}"></script>
+<script>
+    function seeAns(ID) {
+        var id = ID.replace("see","");
+        $.ajax({
+            url:"/SeeAnswers",
+            type:"post",
+            data:"&quesNo="+id,
+            dataType:"text",
+            success:function (result) {
+                alert(result);
+                document.write(result);
+                // location.reload(true);
+            },
+            error:function () {
+                alert("something wrong");
+            }
+        })
+    }
+    function delQues(ID) {
+        var id = ID.replace("del","");
+        // alert(id);
+        if(confirm("确定删除吗？")) {
+            $.ajax({
+                url:"/DelQues",
+                type:"post",
+                data:"&topicNo="+id,
+                dataType:"text",
+                success:function (result) {
+                    //alert(result);
+                    location.reload(true);
+                },
+                error:function () {
+                    alert("something wrong");
+                }
+            })
+        }
+    }
+</script>
+</html>

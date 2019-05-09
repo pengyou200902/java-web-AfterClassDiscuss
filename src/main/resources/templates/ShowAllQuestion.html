@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>All Question</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" type="text/css">
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/board.css}" rel="stylesheet" type="text/css">
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+        }
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div th:replace="TopNavBar :: topbar"></div>
+    <div th:if="${infoMap.acctype} eq 'student'" ><div th:replace="LeftSideBar :: stuleftbar"></div></div>
+    <div th:if="${infoMap.acctype} eq 'teacher'" ><div th:replace="LeftSideBar :: tealeftbar"></div></div>
+    <div th:if="${infoMap.acctype} eq 'admin'" ><div th:replace="LeftSideBar :: adminleftbar"></div></div>
+    <div class="container-fluid">
+        <div class="row">
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                <h2 th:text="'All Questions ('+${infoMap.quesQuantity}+')'"></h2>
+                <div class="list-group-item" th:each="topic:${allTopics}">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title" th:text="'#'+${topic.quesOrder}+'  Title: '+${topic.title}"></h4>
+                        </div>
+                        <h6 class="card-title" th:text="'Questioner: '+${topic.questioner}"></h6>
+                        <h6 class="card-title" th:text="'Time: '+${topic.time}"></h6>
+                        <h6 class="card-title" th:text="'Lesson: '+${topic.lsnName}+'     Teacher: '+${topic.teaName}"></h6>
+                        <div class="panel-body" th:text="${topic.content}"></div><br>
+                        <button th:id="'see'+${topic.quesNo}" class="btn-primary" onclick=seeAns($(this).attr("id"))>See Answers</button>&nbsp;
+                        <div th:if="${infoMap.acctype eq 'admin' || infoMap.acc eq topic.acc}" style="float: right;">
+                            <button th:id="'del'+${topic.quesNo}" class="btn-primary" onclick=delQues($(this).attr("id"))>Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" th:src="@{/js/jquery-3.3.1.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.bundle.js}"></script>
+<script type="text/javascript" th:src="@{/js/feather.min.js}"></script>
+<script>
+    function seeAns(ID) {
+        var id = ID.replace("see","");
+        $.ajax({
+            url:"/SeeAnswers",
+            type:"post",
+            data:"&quesNo="+id,
+            dataType:"text",
+            success:function (result) {
+                //alert(result);
+                document.write(result);
+                // location.reload(true);
+            },
+            error:function () {
+                alert("something wrong");
+            }
+        })
+    }
+    function delQues(ID) {
+        var id = ID.replace("del","");
+        // alert(id);
+        if(confirm("确定删除吗？")) {
+            $.ajax({
+                url:"/DelQues",
+                type:"post",
+                data:"&topicNo="+id,
+                dataType:"text",
+                success:function (result) {
+                    alert(result);
+                    location.reload(true);
+                },
+                error:function () {
+                    alert("something wrong");
+                }
+            })
+        }
+    }
+</script>
+</html>
