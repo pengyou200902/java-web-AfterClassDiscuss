@@ -104,7 +104,7 @@
 
 2. ##### 项目目录树
 
-   - Application来进行开启本地服务器和部署该项目。pom.xml里是本项目的各种依赖信
+   - Application来进行开启本地服务器和部署该项目。pom.xml里是本项目的各种依赖
 
    - MybatisGenerator可以根据generatorConfig.xml里的配置信息生成model、mapper和dao文件。
 
