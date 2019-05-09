@@ -1,6 +1,5 @@
 **作者：Friende**  
 **时间：2019年1月**  
-**说明：static/js 下的bootstrap.bundle.js由于idea代码分析过慢未上传  **  
 
 **一、完成内容**
 
