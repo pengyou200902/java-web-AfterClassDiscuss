@@ -5,7 +5,9 @@ import com.friend.py.model.LessonExample;
 import com.friend.py.model.LessonKey;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface LessonMapper {
     int countByExample(LessonExample example);
 

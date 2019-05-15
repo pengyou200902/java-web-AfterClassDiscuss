@@ -4,7 +4,9 @@ import com.friend.py.model.Topic;
 import com.friend.py.model.TopicExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface TopicMapper {
     int countByExample(TopicExample example);
 

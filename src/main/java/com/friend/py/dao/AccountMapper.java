@@ -4,7 +4,9 @@ import com.friend.py.model.Account;
 import com.friend.py.model.AccountExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface AccountMapper {
     int countByExample(AccountExample example);
 
